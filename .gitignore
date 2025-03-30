@@ -8,9 +8,13 @@ dist/
 build/
 out/
 
-# Environment variables
+# Environment variables - make sure ALL .env files are ignored
 .env
+.env.*
 .env.local
+.env.development
+.env.test
+.env.production
 .env.development.local
 .env.test.local
 .env.production.local
@@ -63,4 +67,13 @@ coverage/
 .pnp.*
 
 # npm
-package-lock.json 
+package-lock.json
+
+# Build artifacts
+*.tsbuildinfo
+*.d.ts.map
+.vercel
+.next
+
+# Local Netlify folder
+.netlify 

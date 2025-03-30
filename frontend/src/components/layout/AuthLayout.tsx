@@ -1,13 +1,14 @@
 import React from 'react';
 import { 
   Box, 
-  Container, 
+  Container,
   Text, 
-  Flex, 
+  Flex,
   Group,
   useMantineTheme,
   Paper,
-  Title
+  Title,
+  Center
 } from '@mantine/core';
 import { IconRocket } from '@tabler/icons-react';
 
@@ -31,10 +32,12 @@ export function AuthLayout({ children, title }: AuthLayoutProps) {
   const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
 
   return (
-    <Box
+    <Flex
+      direction="column"
       style={{ 
         minHeight: '100vh',
-        background: theme.colors.gray[0],
+        width: '100%',
+        background: `linear-gradient(45deg, ${theme.colors.blue[6]} 0%, ${theme.colors.indigo[9]} 100%)`,
         position: 'relative'
       }}
     >
@@ -50,41 +53,41 @@ export function AuthLayout({ children, title }: AuthLayoutProps) {
         }}
       >
         <Group>
-          <IconRocket size={24} />
-          <Text size="lg" fw={700}>Blockchain Indexer</Text>
+          <IconRocket size={24} color="white" />
+          <Text size="lg" fw={700} c="white">DexIndexer</Text>
         </Group>
       </Box>
       
       {/* Main content */}
-      <Flex 
-        direction="column" 
-        justify="center" 
-        align="center" 
+      <Flex
+        align="center"
+        justify="center"
         style={{ 
-          minHeight: '100vh', 
-          padding: '20px'
+          width: '100%', 
+          flex: 1,
+          minHeight: '100vh'
         }}
       >
-        <Paper 
-          radius="md" 
-          shadow="xl" 
-          p={30}
-          withBorder
-          style={{
-            width: '100%',
-            maxWidth: 450,
-            marginBottom: 20
-          }}
-        >
-          <Title order={2} ta="center" mb="xl">{title}</Title>
-          {children}
-        </Paper>
-        
-        {/* Quote */}
-        <Container size="sm">
+        <Container size="xs" py="xl">
+          <Paper 
+            radius="md" 
+            shadow="xl" 
+            p={35}
+            withBorder
+            style={{
+              width: '100%',
+              backgroundColor: theme.white,
+              marginBottom: 20
+            }}
+          >
+            <Title order={2} ta="center" mb="xl">{title}</Title>
+            {children}
+          </Paper>
+          
+          {/* Quote */}
           <Text 
             ta="center" 
-            c="dimmed" 
+            c="white" 
             size="sm" 
             fs="italic" 
             mt="md"
@@ -94,6 +97,6 @@ export function AuthLayout({ children, title }: AuthLayoutProps) {
           </Text>
         </Container>
       </Flex>
-    </Box>
+    </Flex>
   );
 } 
