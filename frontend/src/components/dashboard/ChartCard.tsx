@@ -1,45 +1,41 @@
 import React from 'react';
-import { Card, Text, Group, useMantineTheme, Select, rem } from '@mantine/core';
+import { Card, Text, Group, Select } from '@mantine/core';
 
 interface ChartCardProps {
   title: string;
   chart: React.ReactNode;
   description?: string;
   filters?: {
-    value: string;
     options: { value: string; label: string }[];
+    defaultValue: string;
     onChange: (value: string | null) => void;
   };
 }
 
 export function ChartCard({ title, chart, description, filters }: ChartCardProps) {
-  const theme = useMantineTheme();
-
   return (
-    <Card withBorder p="lg" radius="md">
+    <Card shadow="sm" p="md" radius="md" withBorder>
       <Group justify="space-between" mb="md">
         <Text fw={700} size="md">{title}</Text>
         
         {filters && (
           <Select
             size="xs"
-            value={filters.value}
-            onChange={filters.onChange}
             data={filters.options}
-            style={{ width: rem(130) }}
+            defaultValue={filters.defaultValue}
+            onChange={filters.onChange}
+            w={120}
           />
         )}
       </Group>
-
+      
+      <div>{chart}</div>
+      
       {description && (
-        <Text size="xs" c="dimmed" mb="md">
+        <Text c="dimmed" size="xs" mt="md">
           {description}
         </Text>
       )}
-
-      <div style={{ height: rem(250) }}>
-        {chart}
-      </div>
     </Card>
   );
 } 

@@ -5,36 +5,26 @@ import {
   Title,
   Text,
   TextInput,
-  NumberInput,
   Button,
   Group,
   Paper,
   Alert,
-  Grid,
   Stepper,
   Card,
   Box,
   Select,
   Checkbox,
-  ThemeIcon,
-  Center,
-  List,
   Stack,
   Radio,
   Divider,
-  Accordion,
   MultiSelect,
   LoadingOverlay
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { 
   IconAlertCircle, 
-  IconCheck, 
   IconDatabase, 
-  IconArrowRight,
   IconRocket,
-  IconListDetails,
-  IconSettings,
   IconChevronRight,
   IconChevronLeft,
   IconPlus
@@ -136,9 +126,9 @@ export default function CreateIndexingJob() {
     },
     validate: {
       name: (value) => (value.trim().length === 0 ? 'Job name is required' : null),
-      databaseConfigId: (value, values) => 
+      databaseConfigId: (value) => 
         activeStep >= 1 && value.trim().length === 0 ? 'Please select a database configuration' : null,
-      dataType: (value, values) => 
+      dataType: (value) => 
         activeStep >= 2 && value.trim().length === 0 ? 'Please select a data type to index' : null,
       configOptions: {
         collections: (value, values) => 
@@ -166,10 +156,10 @@ export default function CreateIndexingJob() {
       
       setDatabaseConfigs(response.data || []);
       
-      // Set mock data for development only if no production data is available
+      // If no real data, use mock data for development
       if (!response.data || response.data.length === 0) {
         // For development/testing purposes only - remove in production
-        if (process.env.NODE_ENV === 'development') {
+        if (import.meta.env.DEV) {
           setDatabaseConfigs([
             { 
               id: '1', 
@@ -241,7 +231,7 @@ export default function CreateIndexingJob() {
       setError(null);
       setSuccess(null);
       
-      const response = await api.post('/api/indexing-jobs', form.values, {
+      await api.post('/api/indexing-jobs', form.values, {
         headers: {
           Authorization: `Bearer ${token}`
         }

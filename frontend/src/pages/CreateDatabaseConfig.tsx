@@ -12,7 +12,6 @@ import {
   Group,
   Paper,
   Alert,
-  Divider,
   Grid,
   Stepper,
   Card,
@@ -49,7 +48,7 @@ const api = axios.create({
 export default function CreateDatabaseConfig() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+  const [_, setSuccess] = useState<string | null>(null);
   const [testingConnection, setTestingConnection] = useState(false);
   const [testResult, setTestResult] = useState<{ success: boolean; message: string } | null>(null);
   const [activeStep, setActiveStep] = useState(0);
@@ -81,7 +80,7 @@ export default function CreateDatabaseConfig() {
       setTestingConnection(true);
       setTestResult(null);
       
-      const response = await api.post('/api/database-configs/test', form.values, {
+      await api.post('/api/database-configs/test', form.values, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -110,7 +109,7 @@ export default function CreateDatabaseConfig() {
       setLoading(true);
       setError(null);
       
-      const response = await api.post('/api/database-configs', values, {
+      await api.post('/api/database-configs', values, {
         headers: {
           Authorization: `Bearer ${token}`
         }

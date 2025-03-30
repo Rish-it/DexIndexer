@@ -14,9 +14,7 @@ import {
 import { 
   IconDatabase, 
   IconList, 
-  IconPlus, 
   IconChartBar, 
-  IconUserPlus,
   IconServer,
   IconCloudUpload
 } from '@tabler/icons-react';
@@ -24,7 +22,6 @@ import axios from 'axios';
 import { DashboardShell } from '../components/layout/DashboardShell';
 import { StatCard } from '../components/dashboard/StatCard';
 import { ActivityCard } from '../components/dashboard/ActivityCard';
-import { ChartCard } from '../components/dashboard/ChartCard';
 
 interface DatabaseConfig {
   id: string;
@@ -49,7 +46,7 @@ export default function Dashboard() {
   const [databaseConfigs, setDatabaseConfigs] = useState<DatabaseConfig[]>([]);
   const [indexingJobs, setIndexingJobs] = useState<IndexingJob[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [_, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchDashboardData = async () => {

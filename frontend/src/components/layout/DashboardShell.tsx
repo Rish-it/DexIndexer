@@ -1,35 +1,27 @@
-import { useState } from 'react';
-import { 
-  AppShell, 
-  Burger, 
-  Group, 
+import { useDisclosure } from '@mantine/hooks';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import {
+  AppShell,
+  Burger,
+  Group,
   NavLink, 
   Text, 
   UnstyledButton,
   Avatar,
   Menu,
-  rem,
   Divider,
   ScrollArea,
-  useMantineTheme,
-  Box
 } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
 import { 
-  IconHome, 
   IconDatabase, 
-  IconList, 
   IconLogout,
   IconUser,
   IconSettings,
   IconChevronDown,
-  IconServer,
-  IconReportAnalytics,
   IconDashboard,
   IconRocket,
   IconChartBar
 } from '@tabler/icons-react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
 interface DashboardShellProps {
@@ -38,7 +30,6 @@ interface DashboardShellProps {
 
 export function DashboardShell({ children }: DashboardShellProps) {
   const [opened, { toggle }] = useDisclosure();
-  const theme = useMantineTheme();
   const { user, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
@@ -72,14 +63,14 @@ export function DashboardShell({ children }: DashboardShellProps) {
             <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
             <Text size="lg" fw={700}>Blockchain Indexer</Text>
           </Group>
-          
+        
           <Menu
             width={200}
             position="bottom-end"
             shadow="md"
           >
             <Menu.Target>
-              <UnstyledButton 
+              <UnstyledButton
                 style={{ borderRadius: 8, padding: '4px 8px' }} 
                 className="user-menu-button"
               >

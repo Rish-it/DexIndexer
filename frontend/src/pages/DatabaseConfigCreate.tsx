@@ -67,7 +67,7 @@ export default function DatabaseConfigCreate() {
       setLoading(true);
       setError(null);
       
-      const response = await axios.post('/api/database-configs', values, {
+      await axios.post('/api/database-configs', values, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -92,7 +92,7 @@ export default function DatabaseConfigCreate() {
       setTestLoading(true);
       setTestResult(null);
       
-      const response = await axios.post('/api/database-configs/test', form.values, {
+      await axios.post('/api/database-configs/test', form.values, {
         headers: {
           Authorization: `Bearer ${token}`
         }

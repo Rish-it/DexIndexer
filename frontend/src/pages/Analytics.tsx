@@ -27,7 +27,6 @@ import {
   IconActivity,
   IconClock,
   IconServer,
-  IconUsersGroup,
   IconDatabaseImport,
   IconAlertCircle,
   IconCheck,

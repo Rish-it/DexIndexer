@@ -1,11 +1,12 @@
 import React from 'react';
-import { Card, Text, Group, ThemeIcon, useMantineTheme, rem } from '@mantine/core';
+import { Card, Group, Text, ThemeIcon } from '@mantine/core';
+import { IconArrowUpRight, IconArrowDownRight } from '@tabler/icons-react';
 
 interface StatCardProps {
   title: string;
   value: string | number;
   description?: string;
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
   trend?: {
     value: number;
     isPositive: boolean;
@@ -13,46 +14,52 @@ interface StatCardProps {
   color?: string;
 }
 
-export function StatCard({ title, value, description, icon, trend, color }: StatCardProps) {
-  const theme = useMantineTheme();
-  const defaultColor = theme.primaryColor;
-  const cardColor = color || defaultColor;
-
+export function StatCard({ title, value, description, icon, trend, color = 'blue' }: StatCardProps) {
   return (
     <Card withBorder p="lg" radius="md">
-      <Group justify="space-between" mb={5}>
-        <Text size="sm" fw={700} c="dimmed">
+      <Group justify="space-between" mb="xs">
+        <Text size="sm" fw={500}>
           {title}
         </Text>
-        <ThemeIcon 
-          size="lg" 
-          variant="light"
-          color={cardColor}
-          style={{ backgroundColor: `rgba(${theme.colors[cardColor][6]}, 0.1)` }}
-        >
-          {icon}
-        </ThemeIcon>
+        {icon && (
+          <ThemeIcon 
+            size="lg" 
+            radius="md" 
+            variant="filled" 
+            color={color}
+          >
+            {icon}
+          </ThemeIcon>
+        )}
       </Group>
 
-      <Text fw={700} size="xl">
+      <Text size="xl" fw={700} mt="sm">
         {value}
       </Text>
-
+      
       {description && (
-        <Text size="xs" c="dimmed" mt={4}>
+        <Text size="sm" c="dimmed" mt="sm">
           {description}
         </Text>
       )}
-
+      
       {trend && (
         <Group mt="md" gap="xs">
+          <ThemeIcon 
+            color={trend.isPositive ? 'teal' : 'red'} 
+            variant="light" 
+            size="sm" 
+            radius="sm"
+          >
+            {trend.isPositive ? <IconArrowUpRight size={16} /> : <IconArrowDownRight size={16} />}
+          </ThemeIcon>
           <Text 
             c={trend.isPositive ? 'teal' : 'red'} 
-            fw={500}
+            fw={500} 
             size="sm"
             style={{ display: 'flex', alignItems: 'center' }}
           >
-            {trend.isPositive ? '↑' : '↓'} {Math.abs(trend.value)}%
+            {trend.isPositive ? '+' : ''} {Math.abs(trend.value)}%
           </Text>
           <Text size="xs" c="dimmed">compared to previous period</Text>
         </Group>
