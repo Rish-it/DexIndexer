@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String           @id @default(uuid())
+  email          String           @unique
+  password       String
+  createdAt      DateTime         @default(now()) @map("created_at")
+  updatedAt      DateTime         @updatedAt @map("updated_at")
+  databaseConfigs DatabaseConfig[]
+  indexingJobs   IndexingJob[]
+
+  @@map("users")
+}
+
+model DatabaseConfig {
+  id            String        @id @default(uuid())
+  userId        String        @map("user_id")
+  name          String
+  host          String
+  port          Int
+  username      String
+  password      String
+  databaseName  String        @map("database_name")
+  ssl           Boolean
+  status        String        @default("pending") // pending, connected, error
+  lastCheckedAt DateTime?     @map("last_checked_at")
+  error         String?
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  indexingJobs  IndexingJob[]
+
+  @@map("database_configs")
+}
+
+model IndexingJob {
+  id               String         @id @default(uuid())
+  userId           String         @map("user_id")
+  databaseConfigId String         @map("database_config_id")
+  name             String
+  type             String         // nft_bids, nft_prices, token_borrowing, token_prices
+  status           String         @default("pending") // pending, active, paused, error, completed
+  config           Json
+  webhookId        String?        @map("webhook_id")
+  recordsIndexed   Int            @default(0) @map("records_indexed")
+  lastSyncAt       DateTime?      @map("last_sync_at")
+  createdAt        DateTime       @default(now()) @map("created_at")
+  updatedAt        DateTime       @updatedAt @map("updated_at")
+  error            String?
+  user             User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  databaseConfig   DatabaseConfig @relation(fields: [databaseConfigId], references: [id], onDelete: Cascade)
+  webhookEvents    WebhookEvent[]
+
+  @@map("indexing_jobs")
+}
+
+model WebhookEvent {
+  id            String      @id @default(uuid())
+  webhookId     String      @map("webhook_id")
+  indexingJobId String      @map("indexing_job_id")
+  payload       Json
+  status        String      // received, processed, error
+  error         String?
+  processedAt   DateTime?   @map("processed_at")
+  createdAt     DateTime    @default(now()) @map("created_at")
+  indexingJob   IndexingJob @relation(fields: [indexingJobId], references: [id], onDelete: Cascade)
+
+  @@map("webhook_events")
+} 

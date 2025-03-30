@@ -1,0 +1,14 @@
+{
+  "name": "blockchain-indexer",
+  "version": "1.0.0",
+  "description": "Blockchain Indexer Platform",
+  "main": "index.js",
+  "scripts": {
+    "start:backend": "cd backend && npm run start:dev",
+    "start:frontend": "cd frontend && npm run dev",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\""
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+} 
